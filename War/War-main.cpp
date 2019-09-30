@@ -1,6 +1,12 @@
 ﻿/** 
-  FIXME: Put your header here
- */
+  /** L0: GAme of War
+: Liberty Mupotsa 
+: username(s): mupotsal
+Purpose: 
+Acknowledgements:
+Modified from original code written by Dr. Jan Pearce
+*/
+ 
 
 #include <iostream> 
 #include <algorithm>    // has shuffle
