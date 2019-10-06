@@ -170,7 +170,8 @@ public:
 				}
 			}
 			else {
-				cout << "we are here" << endl;
+				mycc = remove_my_card();
+				othercc = remove_other_card();
 			}
 		}
 	}
@@ -245,6 +246,19 @@ public:
 			cout << "we do not know" << endl;
 		}
 	}
+	void play_game() {
+		compare_cards();
+		move_my_loot();
+		move_other_loot();
+		move_my_storage();
+		move_other_storage();
+		/*if (myPlayingPile.size() < 10){
+			move_my_storage();
+		}
+		if (otherPlayingPile.size() <10) {
+			move_other_storage();
+		}*/
+	}
 private:
 	vector<int> newdecks; //This is the ONLY vector you are allowed to use
 	int myCurrent;
@@ -286,24 +300,15 @@ int main(){
 	cout << x << endl;
 	int y = 0;
 	int z = 2;
-	while ( x == 1) {		
-		game.compare_cards();
-		cout << "The value of y1" << y << endl;
-		game.move_my_loot();
-		cout << "The value of y2" << y << endl;
-		game.move_other_loot();
-		cout << "The value of y3" << y << endl;
-		game.move_other_storage();
-		game.move_my_storage();
-		cout << "The value of y4" << y << endl;
-		
-
+	while ( x == 1) {	
+		cout << "This is round" << y << endl;
+		game.play_game();
 		 x = game.proceed();
 		 y += 1;
 		 cout << "The value of yfinal" << y << endl;
 		
 	}
-	cout << "The value of y" << y << endl;
+	cout << "The game took" << y << "rounds to end" << endl;
 	game.who_won();
 
 	cin >> stopme; //holds open the window in some cases
