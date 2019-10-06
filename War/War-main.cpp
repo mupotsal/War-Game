@@ -9,10 +9,13 @@ Modified from original code written by Dr. Jan Pearce
  
 
 #include <iostream> 
-#include <algorithm>    // has shuffle
+#include <algorithm>    // has shuffle// One has to include this to get the algorithm
 #include <vector> 
 #include <random>
 #include <chrono>
+#include <deque> // this will add the deque template
+#include <stack> // this will add the stack template
+#include <queue> // This will add the queue in the program
 
 using namespace std;
 
@@ -36,13 +39,13 @@ private:
 
 class War{
 /** 
-FIXME
+FIXME here I have to make a constructor below
 */
 public:
 	War() {
 		//FIXME
-
 		// This code makes the 5 decks of cards that are in order
+
 		newdecks.reserve(125);
 		for (int i = 0; i < 5; i++){
 			for (int j = 0; j < 10; j++){
@@ -64,10 +67,191 @@ public:
 		} // FIXME: remove this }
 
 	}
+	void add_dealingPile() {
+		// adds the shuffled decks of cards to the dealer's pile
+		for (int i = 0; i < 50; i++) {
+			dealingPile.push(newdecks[i]);
+		}
+		cout << "This is the myplaying" << dealingPile.top() << endl;
+	}
 
+	void deal() {
+		// deals out 25 cards from to each player's playing pile from shuffled dealers pile
+		for (int i = 0; i < 25; i++) { // put 25 to because the loop shall go for 25 times before all cards are distributed
+			myPlayingPile.push(dealingPile.top());			
+			dealingPile.pop();
+			otherPlayingPile.push(dealingPile.top());
+			dealingPile.pop();
+		}
+		//for (int i = 0; i < 25; i++) { //FIXME: Remove this loop--it is for testing only
+			//cout<< "This is the myplaying "<< myPlayingPile.top() << endl;
+			//myPlayingPile.pop();
+		//}
+	}
+	int remove_my_card() {
+		// Precondition: myPlayingPile is not empty 
+	    // If it is not empty, the function removes a card from myPlayingPile, 
+		// returning the stored value
+		if (myPlayingPile.empty() == 0) {
+			int topcard = myPlayingPile.top();
+			myPlayingPile.pop();
+			return topcard;
+		}
+	}
+
+	int remove_other_card() {
+		// Precondition: otherPlayingPile is not empty 
+	    // If it is not empty, the function removes a card from otherPlayingPile,
+        // returning the stored value
+		if (otherPlayingPile.empty() == 0) {
+			int topcard = otherPlayingPile.top();
+			otherPlayingPile.pop();
+			return topcard;
+		}
+	}
+	int display_card() {
+		// displays a card on the screen and returns the value
+
+	}
+	bool compare_cards() {
+		// compares myCurrent to otherCurrent and behaves appropriately  
+		
+		myCurrent = remove_my_card();
+		otherCurrent = remove_other_card();
+		if (myCurrent > otherCurrent) {
+			lootPile.push(myCurrent);
+			lootPile.push(otherCurrent);
+			cout << "my current valeu is " << myCurrent << endl;
+			return true;
+		}
+		else if (myCurrent < otherCurrent) {
+			lootPile.push(myCurrent);
+			lootPile.push(otherCurrent);
+			cout << "other current value is " << otherCurrent << endl;
+			return false;
+		}
+		else {
+			breaking_the_war();
+			return true;
+		}
+		
+	}
+
+	void breaking_the_war() {
+		cout << "Broke the war" << endl;
+		int mycc = myCurrent;
+		int othercc = otherCurrent;
+		while (mycc == othercc) {
+			commonlootPile.push(mycc);
+			commonlootPile.push(othercc);
+			mycc = remove_my_card();
+			othercc = remove_other_card();
+		}
 	
+		 if (mycc > othercc) {
+			commonlootPile.push(mycc);
+			commonlootPile.push(othercc);
+			bool isempty = commonlootPile.empty();
+			while (isempty == 0) {	
+				myStoragePile.push(commonlootPile.front());
+				commonlootPile.pop();
+				
+			}
+			
+		}
+		if (mycc < othercc) {
+			commonlootPile.push(mycc);
+			commonlootPile.push(othercc);
+			bool isempty = commonlootPile.empty();
+			while (isempty == 0) {
+			otherStoragePile.push(commonlootPile.front());
+				commonlootPile.pop();
+				isempty = commonlootPile.empty();
+			}
+		} 
+	}
+
+	void move_my_loot() {	
+		
+		if (myCurrent > otherCurrent) {
+			cout << "we moved my loot to mystorage file" << endl;
+			bool val = lootPile.empty();
+			while (val == 0) {
+				myStoragePile.push(lootPile.front());
+				lootPile.pop();
+				val = lootPile.empty();
+			}
+		}
+		cout << "The lootpile went to my storagepile" << endl;
+		// moves everything from lootPile to myStoragePile    
+
+	}
+	void move_other_loot() {
+		// moves everything from lootPile to otherStoragePile
+		if (myCurrent < otherCurrent) {
+			cout << "we moved from lootpil other storagepile" << endl;
+			bool val = lootPile.empty();
+			while (val == 0) {
+				otherStoragePile.push(lootPile.front());
+				lootPile.pop();
+				val = lootPile.empty();
+			}
+		}
+		cout << "The lootpile went to otherstorage pile" << endl;
+	}
+	void move_my_storage() {
+		// moves everything from otherStoragePile to otherPlayingPile
+		bool x = myStoragePile.empty();
+		while (x != 0) {
+			myPlayingPile.push(myStoragePile.front());
+			myStoragePile.pop();
+			x = myStoragePile.empty();
+		}
+
+
+	}
+	void move_other_storage() {
+		bool y = otherStoragePile.empty();
+		while (y != 0) {
+			otherPlayingPile.push(otherStoragePile.front());
+			otherStoragePile.pop();
+			y = otherStoragePile.empty();
+		}
+
+
+	}
+
+	bool proceed() {
+		if ((myPlayingPile.size() > 0) && (otherPlayingPile.size() > 0)) {
+			return currentState;
+		}
+		else {
+			currentState = false;
+			return currentState;
+		}
+	}
+
+	void who_won() {
+		if (myPlayingPile > otherPlayingPile) {
+			cout << "the user Won the game" << endl;
+		}
+		else if (myPlayingPile < otherPlayingPile) {
+			cout << "The Computer Won" << endl;
+		}
+	}
 private:
 	vector<int> newdecks; //This is the ONLY vector you are allowed to use
+	int myCurrent;
+	int otherCurrent;
+	bool currentState = true;
+	stack <int> dealingPile;
+	stack <int> myPlayingPile;
+	stack <int> otherPlayingPile;
+	queue <int> myStoragePile;
+	queue <int> otherStoragePile;
+	queue <int> lootPile;
+	queue <int> commonlootPile;
+
 
 	/* For each set of piles (except possibly the dealing pile as described), 
 	you are required to use stacks, queues, and deques data structures appropriately, 
@@ -88,10 +272,32 @@ private:
 
 int main(){
 	char stopme;
-
+	
 	War game;
+	game.add_dealingPile();
+	game.deal();
+	bool x = game.proceed();
+	cout << x << endl;
+	int y = 0;
+	int z = 2;
+	while ( z == 2) {		
+		game.compare_cards();
+		cout << "The value of y1" << y << endl;
+		game.move_my_loot();
+		cout << "The value of y2" << y << endl;
+		game.move_other_loot();
+		cout << "The value of y3" << y << endl;
+		/*game.move_my_storage();
+		cout << "The value of y4" << y << endl;
+		game.move_other_storage();*/
 
-
+		 x = game.proceed();
+		 y += 1;
+		 cout << "The value of yfinal" << y << endl;
+		
+	}
+	cout << "The value of y" << y << endl;
+	game.who_won();
 
 	cin >> stopme; //holds open the window in some cases
 	return 0;
