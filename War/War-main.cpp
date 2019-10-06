@@ -146,29 +146,33 @@ public:
 			commonlootPile.push(othercc);
 			mycc = remove_my_card();
 			othercc = remove_other_card();
-		}
-	
-		 if (mycc > othercc) {
-			commonlootPile.push(mycc);
-			commonlootPile.push(othercc);
-			bool isempty = commonlootPile.empty();
-			while (isempty == 0) {	
-				myStoragePile.push(commonlootPile.front());
-				commonlootPile.pop();
-				
+
+			if (mycc > othercc) {
+				commonlootPile.push(mycc);
+				commonlootPile.push(othercc);
+				bool isempty = commonlootPile.empty();
+				while (isempty == 0) {
+					myStoragePile.push(commonlootPile.front());
+					commonlootPile.pop();
+					isempty = commonlootPile.empty();
+
+				}
+
+			}		
+			else if (mycc < othercc) {
+				commonlootPile.push(mycc);
+				commonlootPile.push(othercc);
+				bool isempty = commonlootPile.empty();
+				while (isempty == 0) {
+					otherStoragePile.push(commonlootPile.front());
+					commonlootPile.pop();
+					isempty = commonlootPile.empty();
+				}
 			}
-			
-		}
-		if (mycc < othercc) {
-			commonlootPile.push(mycc);
-			commonlootPile.push(othercc);
-			bool isempty = commonlootPile.empty();
-			while (isempty == 0) {
-			otherStoragePile.push(commonlootPile.front());
-				commonlootPile.pop();
-				isempty = commonlootPile.empty();
+			else {
+				cout << "we are here" << endl;
 			}
-		} 
+		}
 	}
 
 	void move_my_loot() {	
@@ -202,7 +206,7 @@ public:
 	void move_my_storage() {
 		// moves everything from otherStoragePile to otherPlayingPile
 		bool x = myStoragePile.empty();
-		while (x != 0) {
+		while (x != 1) {
 			myPlayingPile.push(myStoragePile.front());
 			myStoragePile.pop();
 			x = myStoragePile.empty();
@@ -212,12 +216,11 @@ public:
 	}
 	void move_other_storage() {
 		bool y = otherStoragePile.empty();
-		while (y != 0) {
+		while (y != 1) {
 			otherPlayingPile.push(otherStoragePile.front());
 			otherStoragePile.pop();
 			y = otherStoragePile.empty();
 		}
-
 
 	}
 
@@ -237,6 +240,9 @@ public:
 		}
 		else if (myPlayingPile < otherPlayingPile) {
 			cout << "The Computer Won" << endl;
+		}
+		else {
+			cout << "we do not know" << endl;
 		}
 	}
 private:
@@ -280,16 +286,17 @@ int main(){
 	cout << x << endl;
 	int y = 0;
 	int z = 2;
-	while ( z == 2) {		
+	while ( x == 1) {		
 		game.compare_cards();
 		cout << "The value of y1" << y << endl;
 		game.move_my_loot();
 		cout << "The value of y2" << y << endl;
 		game.move_other_loot();
 		cout << "The value of y3" << y << endl;
-		/*game.move_my_storage();
+		game.move_other_storage();
+		game.move_my_storage();
 		cout << "The value of y4" << y << endl;
-		game.move_other_storage();*/
+		
 
 		 x = game.proceed();
 		 y += 1;
