@@ -1,7 +1,7 @@
 ﻿/** 
   /** L0: GAme of War
-: Liberty Mupotsa 
-: username(s): mupotsal
+: Liberty Mupotsa, Wilkensley Thervil 
+: username(s): mupotsal, thervilw
 Purpose: 
 Acknowledgements:
 Modified from original code written by Dr. Jan Pearce
@@ -118,16 +118,21 @@ public:
 		
 		myCurrent = remove_my_card();
 		otherCurrent = remove_other_card();
+		cout << "my current value is " << myCurrent << endl;
+		cout << "other current value is " << otherCurrent << endl;
+		cout << "This is size of my playing pile   "<<myPlayingPile.size() << endl;
+		cout << "This is size of ther playing pile   "<< otherPlayingPile.size() << endl;
+
 		if (myCurrent > otherCurrent) {
 			lootPile.push(myCurrent);
 			lootPile.push(otherCurrent);
-			cout << "my current valeu is " << myCurrent << endl;
+			//cout << "my current value is " << myCurrent << endl;
 			return true;
 		}
 		else if (myCurrent < otherCurrent) {
 			lootPile.push(myCurrent);
 			lootPile.push(otherCurrent);
-			cout << "other current value is " << otherCurrent << endl;
+			//cout << "other current value is " << otherCurrent << endl;
 			return false;
 		}
 		else {
@@ -138,6 +143,14 @@ public:
 	}
 
 	void breaking_the_war() {
+		if (myPlayingPile.empty() == true) {
+			return;
+			cout << "My playing pile is empty" << endl;
+		}
+		if (otherPlayingPile.empty() == true) {
+			return;
+		}	cout << "Other playing pile is empty" << endl;
+		//if (myPlayingPile.empty ==true){} //how to check if mypile is empty
 		cout << "Broke the war" << endl;
 		int mycc = myCurrent;
 		int othercc = otherCurrent;
@@ -145,9 +158,12 @@ public:
 			commonlootPile.push(mycc);
 			commonlootPile.push(othercc);
 			mycc = remove_my_card();
+			cout << " my new card " << mycc << endl;
 			othercc = remove_other_card();
+			cout << " other new card " << othercc << endl;
 
 			if (mycc > othercc) {
+				cout << "my card is bigger" << endl;
 				commonlootPile.push(mycc);
 				commonlootPile.push(othercc);
 				bool isempty = commonlootPile.empty();
@@ -160,6 +176,7 @@ public:
 
 			}		
 			else if (mycc < othercc) {
+				cout << " others card is bigger" << endl;
 				commonlootPile.push(mycc);
 				commonlootPile.push(othercc);
 				bool isempty = commonlootPile.empty();
@@ -169,10 +186,10 @@ public:
 					isempty = commonlootPile.empty();
 				}
 			}
-			else {
-				mycc = remove_my_card();
-				othercc = remove_other_card();
-			}
+			//else {
+			//	mycc = remove_my_card();
+			//	othercc = remove_other_card();
+			//}
 		}
 	}
 
@@ -207,20 +224,26 @@ public:
 	void move_my_storage() {
 		// moves everything from otherStoragePile to otherPlayingPile
 		bool x = myStoragePile.empty();
-		while (x != 1) {
-			myPlayingPile.push(myStoragePile.front());
-			myStoragePile.pop();
-			x = myStoragePile.empty();
+		int z = myPlayingPile.size();
+		while (x != 1) {			
+				myPlayingPile.push(myStoragePile.front());
+				myStoragePile.pop();
+				x = myStoragePile.empty();
+				
+			
 		}
 
 
 	}
 	void move_other_storage() {
 		bool y = otherStoragePile.empty();
-		while (y != 1) {
-			otherPlayingPile.push(otherStoragePile.front());
-			otherStoragePile.pop();
-			y = otherStoragePile.empty();
+		int z = otherPlayingPile.size();
+		while (y != 1) {			
+				otherPlayingPile.push(otherStoragePile.front());
+				otherStoragePile.pop();
+				y = otherStoragePile.empty();
+				
+			
 		}
 
 	}
@@ -236,6 +259,10 @@ public:
 	}
 
 	void who_won() {
+		cout << "The size of myPlaying pile  " << myPlayingPile.size() << endl;
+		cout << "The size of therPlyaing pile  " << otherPlayingPile.size() << endl;
+		cout << "The size of myStorage pile  " << myStoragePile.size() << endl;
+		cout << "The size of otherStorage pile  " << otherStoragePile.size() << endl;
 		if (myPlayingPile > otherPlayingPile) {
 			cout << "the user Won the game" << endl;
 		}
@@ -249,11 +276,11 @@ public:
 	void play_game() {
 		compare_cards();
 		move_my_loot();
-		move_other_loot();
+		move_other_loot();	
 		move_my_storage();
 		move_other_storage();
 		/*if (myPlayingPile.size() < 10){
-			move_my_storage();
+			
 		}
 		if (otherPlayingPile.size() <10) {
 			move_other_storage();
