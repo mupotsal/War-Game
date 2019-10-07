@@ -328,7 +328,7 @@ int main(){
 
 
 	}
-	cout << "The game took                             " << y << " rounds to end" << endl;
+	cout << "The game took......................................" << y << " rounds to end" << endl;
 	game.who_won();
 
 	cin >> stopme; //holds open the window in some cases
