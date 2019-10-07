@@ -15,7 +15,7 @@ Modified from original code written by Dr. Jan Pearce
 #include <chrono>
 #include <deque> // this will add the deque template
 #include <stack> // this will add the stack template
-#include <queue> // This will add the queue in the program
+#include <queue> // This will add the queue in the programm
 
 using namespace std;
 
