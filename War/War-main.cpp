@@ -61,10 +61,10 @@ public:
 		shuffle(newdecks.begin(), newdecks.end(), std::default_random_engine(seed));
 
 		//FIXME: The following code should be removed or commented out
-		cout << "We see our randomized cards" << endl; //FIXME: Remove thisLine
-		for (int i = 0; i < 50; i++) { //FIXME: Remove this loop--it is for testing only
-			cout << newdecks[i]<<endl; //FIXME: remove this line
-		} // FIXME: remove this }
+		//cout << "We see our randomized cards" << endl; //FIXME: Remove thisLine
+		//for (int i = 0; i < 50; i++) { //FIXME: Remove this loop--it is for testing only
+		//	cout << newdecks[i]<<endl; //FIXME: remove this line
+		//} // FIXME: remove this }
 
 	}
 	void add_dealingPile() {
@@ -109,8 +109,11 @@ public:
 			return topcard;
 		}
 	}
-	int display_card() {
+	void display_card() {
+		cout << "The  Human Card is                 " << myCurrent << endl;
+		cout << "The computer Card is               " << otherCurrent << endl;
 		// displays a card on the screen and returns the value
+		
 
 	}
 	bool compare_cards() {
@@ -118,8 +121,8 @@ public:
 		
 		myCurrent = remove_my_card();
 		otherCurrent = remove_other_card();
-		cout << "my current value is " << myCurrent << endl;
-		cout << "other current value is " << otherCurrent << endl;
+		cout << " The Human Card is        " << myCurrent << endl;
+		cout << "The Computer Card is      " << otherCurrent << endl;
 		cout << "This is size of my playing pile   "<<myPlayingPile.size() << endl;
 		cout << "This is size of ther playing pile   "<< otherPlayingPile.size() << endl;
 
@@ -158,12 +161,17 @@ public:
 			commonlootPile.push(mycc);
 			commonlootPile.push(othercc);
 			mycc = remove_my_card();
-			cout << " my new card " << mycc << endl;
+			cout << " The human played this card but its turned down (war time) " << mycc << endl;
+			commonlootPile.push(mycc);
 			othercc = remove_other_card();
-			cout << " other new card " << othercc << endl;
+			cout << " The computer played the card but its also turned down (war time) " << othercc << endl;
+			commonlootPile.push(othercc);
+			mycc = remove_my_card();			
+			othercc = remove_other_card();
+			cout << "Now the computer got " << othercc << "and the human got" << mycc << endl;
 
 			if (mycc > othercc) {
-				cout << "my card is bigger" << endl;
+				cout << "Human card is bigger" << endl;
 				commonlootPile.push(mycc);
 				commonlootPile.push(othercc);
 				bool isempty = commonlootPile.empty();
@@ -173,10 +181,11 @@ public:
 					isempty = commonlootPile.empty();
 
 				}
+				cout << "The whole of lootPile went with the Human" << endl;
 
 			}		
 			else if (mycc < othercc) {
-				cout << " others card is bigger" << endl;
+				cout << " Computer Card is bigger" << endl;
 				commonlootPile.push(mycc);
 				commonlootPile.push(othercc);
 				bool isempty = commonlootPile.empty();
@@ -185,41 +194,40 @@ public:
 					commonlootPile.pop();
 					isempty = commonlootPile.empty();
 				}
-			}
-			//else {
-			//	mycc = remove_my_card();
-			//	othercc = remove_other_card();
-			//}
+				cout << "The whole of lootPile went with the Computer" << endl;
+			}			
 		}
 	}
 
 	void move_my_loot() {	
 		
 		if (myCurrent > otherCurrent) {
-			cout << "we moved my loot to mystorage file" << endl;
+			cout << " Moved lootPile to mystorage file" << endl;
 			bool val = lootPile.empty();
 			while (val == 0) {
 				myStoragePile.push(lootPile.front());
 				lootPile.pop();
 				val = lootPile.empty();
 			}
+			//cout << "The lootpile went to my storagepile" << endl;
 		}
-		cout << "The lootpile went to my storagepile" << endl;
+		
 		// moves everything from lootPile to myStoragePile    
 
 	}
 	void move_other_loot() {
 		// moves everything from lootPile to otherStoragePile
 		if (myCurrent < otherCurrent) {
-			cout << "we moved from lootpil other storagepile" << endl;
+			cout << "we moved from lootpile other storagepile" << endl;
 			bool val = lootPile.empty();
 			while (val == 0) {
 				otherStoragePile.push(lootPile.front());
 				lootPile.pop();
 				val = lootPile.empty();
 			}
+			//cout << "The lootpile went to Computerstorage pile" << endl;
 		}
-		cout << "The lootpile went to otherstorage pile" << endl;
+		
 	}
 	void move_my_storage() {
 		// moves everything from otherStoragePile to otherPlayingPile
@@ -228,12 +236,8 @@ public:
 		while (x != 1) {			
 				myPlayingPile.push(myStoragePile.front());
 				myStoragePile.pop();
-				x = myStoragePile.empty();
-				
-			
+				x = myStoragePile.empty();			
 		}
-
-
 	}
 	void move_other_storage() {
 		bool y = otherStoragePile.empty();
@@ -241,11 +245,8 @@ public:
 		while (y != 1) {			
 				otherPlayingPile.push(otherStoragePile.front());
 				otherStoragePile.pop();
-				y = otherStoragePile.empty();
-				
-			
+				y = otherStoragePile.empty();				
 		}
-
 	}
 
 	bool proceed() {
@@ -264,9 +265,13 @@ public:
 		cout << "The size of myStorage pile:  " << myStoragePile.size() << endl;
 		cout << "The size of otherStorage pile:  " << otherStoragePile.size() << endl;
 		if (myPlayingPile > otherPlayingPile) {
-			cout << "the user Won the game!!" << endl;
+			cout << " ." << endl;
+			cout << " ." << endl;
+			cout << "Congratulations the User Won the game!!, You won the game (:" << endl;
 		}
 		else if (myPlayingPile < otherPlayingPile) {
+			cout << " ." << endl;
+			cout << " ." << endl;
 			cout << "The Computer Won!!" << endl;
 		}
 		else {
@@ -275,16 +280,12 @@ public:
 	}
 	void play_game() {
 		compare_cards();
+		//display_card(); Another method is already displaying so there is no need of this method
 		move_my_loot();
 		move_other_loot();	
 		move_my_storage();
 		move_other_storage();
-		/*if (myPlayingPile.size() < 10){
-			
-		}
-		if (otherPlayingPile.size() <10) {
-			move_other_storage();
-		}*/
+		
 	}
 private:
 	vector<int> newdecks; //This is the ONLY vector you are allowed to use
@@ -298,19 +299,6 @@ private:
 	queue <int> otherStoragePile;
 	queue <int> lootPile;
 	queue <int> commonlootPile;
-
-
-	/* For each set of piles (except possibly the dealing pile as described), 
-	you are required to use stacks, queues, and deques data structures appropriately, 
-	you may NOT use vectors for these, and you must use each data structures correctly. 
-	i.e. you MAY NOT iterate through the data structures. 
-	You may use ONLY 1 vector, and that is for your new cards because the vector class 
-	has a shuffle feature which you will see in this starter code. 
-	This single vector may be used for your dealing pile or you can choose to use a stack, 
-	queue or deque for the dealing pile.*/
-
-
-
 }; //a semi colon must end every C++ class declaration.
 
 
@@ -325,17 +313,22 @@ int main(){
 	game.deal();
 	bool x = game.proceed();
 	cout << x << endl;
-	int y = 0;
-	int z = 2;
+	int y = 0;	
 	while ( x == 1) {	
 		cout << "This is round: " << y << endl;
 		game.play_game();
 		 x = game.proceed();
-		 y += 1;
-		 cout << "The value of y final: " << y << endl;
-		
+		 y += 1; 		
+		 cout << " ." << endl;
+		 cout << " ." << endl;
+		 cout << " . "<< endl;
+		 cout << " ." << endl;
+		 cout << " ." << endl;
+		 cout << " . " << endl;
+
+
 	}
-	cout << "The game took " << y << " rounds to end" << endl;
+	cout << "The game took                             " << y << " rounds to end" << endl;
 	game.who_won();
 
 	cin >> stopme; //holds open the window in some cases
