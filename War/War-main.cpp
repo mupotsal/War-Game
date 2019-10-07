@@ -27,7 +27,7 @@ public:
 		auto seed = chrono::system_clock::now().time_since_epoch().count(); //gets a new seed for the randomness
 		default_random_engine generator(seed);			//seeds our randomness
 		uniform_int_distribution<int> intdist(1, size); //a distibution to make each in-range integer equally likely
-		self_rand_int_ = intdist(generator);			//generates the randme number
+		self_rand_int_ = intdist(generator);			//generates the randme numberr
 	}
 	int roll() {
 		return self_rand_int_;
