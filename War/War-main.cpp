@@ -259,15 +259,15 @@ public:
 	}
 
 	void who_won() {
-		cout << "The size of myPlaying pile  " << myPlayingPile.size() << endl;
-		cout << "The size of therPlyaing pile  " << otherPlayingPile.size() << endl;
-		cout << "The size of myStorage pile  " << myStoragePile.size() << endl;
-		cout << "The size of otherStorage pile  " << otherStoragePile.size() << endl;
+		cout << "The size of myPlaying pile:  " << myPlayingPile.size() << endl;
+		cout << "The size of therPlyaing pile:  " << otherPlayingPile.size() << endl;
+		cout << "The size of myStorage pile:  " << myStoragePile.size() << endl;
+		cout << "The size of otherStorage pile:  " << otherStoragePile.size() << endl;
 		if (myPlayingPile > otherPlayingPile) {
-			cout << "the user Won the game" << endl;
+			cout << "the user Won the game!!" << endl;
 		}
 		else if (myPlayingPile < otherPlayingPile) {
-			cout << "The Computer Won" << endl;
+			cout << "The Computer Won!!" << endl;
 		}
 		else {
 			cout << "we do not know" << endl;
@@ -328,14 +328,14 @@ int main(){
 	int y = 0;
 	int z = 2;
 	while ( x == 1) {	
-		cout << "This is round" << y << endl;
+		cout << "This is round: " << y << endl;
 		game.play_game();
 		 x = game.proceed();
 		 y += 1;
-		 cout << "The value of yfinal" << y << endl;
+		 cout << "The value of y final: " << y << endl;
 		
 	}
-	cout << "The game took" << y << "rounds to end" << endl;
+	cout << "The game took " << y << " rounds to end" << endl;
 	game.who_won();
 
 	cin >> stopme; //holds open the window in some cases
