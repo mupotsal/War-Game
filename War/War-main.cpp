@@ -143,13 +143,13 @@ public:
 	}
 
 	void breaking_the_war() {
-		/*if (myPlayingPile.empty() == true) {
+		if (myPlayingPile.empty() == true) {
 			return;
 			cout << "My playing pile is empty" << endl;
 		}
 		if (otherPlayingPile.empty() == true) {
 			return;
-		}	cout << "Other playing pile is empty" << endl;*/
+		}	cout << "Other playing pile is empty" << endl;
 		//if (myPlayingPile.empty ==true){} //how to check if mypile is empty
 		cout << "Broke the war" << endl;
 		int mycc = myCurrent;
